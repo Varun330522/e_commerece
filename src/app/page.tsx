@@ -1,13 +1,15 @@
-import Link from "next/link";
-
 import { CreatePost } from "~/app/_components/create-post";
 import { Header } from "./_components/header";
+import { SignUp } from "./pages/sign_up";
+import { Login } from "./pages/login";
 
 export default async function Home() {
+  const isSignedUp = false; // Replace this with your actual condition
+
   return (
-    <main >
-        <Header />
-        <CrudShowcase />
+    <main>
+      <Header />
+      {isSignedUp ? <SignUp /> : <Login />}
     </main>
   );
 }

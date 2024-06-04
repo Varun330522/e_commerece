@@ -2,16 +2,16 @@ import Image from 'next/image';
 
 export function Header() {
     return (
-        <div className='w-full overflow-hidden'>
+        <div className='w-full overflow-hidden mb-5'>
         <header className="container m-2 flex items-center justify-between px-2">
-            <div className="font-bold text-xl flex-1">ECOMMERCE</div>
+            <div className="font-bold text-xl flex-1 cursor-pointer">ECOMMERCE</div>
             <div className='grow'>
                 <nav className="flex items-center justify-end space-x-4 text-sm mr-6">
                     <a href="#" className="text-gray-600">Help</a>
                     <a href="#" className="text-gray-600">Orders & Returns</a>
                     <a href="#" className="text-gray-600">Hi, John</a>
                 </nav>
-                <nav className="flex items-center justify-between space-x-4 font-semibold cursor-pointer text-base">
+                <nav className="flex items-center justify-between space-x-4 font-semibold text-base">
                     <div className='flex items-center space-x-5 ml-12'>
                         <a href="#" className="text-gray-600">Categories</a>
                         <a href="#" className="text-gray-600">Sale</a>

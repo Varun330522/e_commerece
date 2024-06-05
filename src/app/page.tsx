@@ -1,15 +1,17 @@
+"use client"
+import { useState } from 'react';
 import { CreatePost } from "~/app/_components/create-post";
 import { Header } from "./_components/header";
 import { SignUp } from "./pages/sign_up";
 import { Login } from "./pages/login";
 
-export default async function Home() {
-  const isSignedUp = false; // Replace this with your actual condition
+export default  function Home() {
+  const [isSignedUp, setIsSignedUp] = useState(false); // Replace this with your actual condition
 
   return (
     <main>
       <Header />
-      {isSignedUp ? <SignUp /> : <Login />}
+      {isSignedUp ? <SignUp setIsSignedUp={setIsSignedUp}/> : <Login setIsSignedUp={setIsSignedUp}/>}
     </main>
   );
 }

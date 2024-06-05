@@ -1,4 +1,4 @@
-export function SignUp() {
+export function SignUp({setIsSignedUp}) {
     return (
       <div className=" flex items-center justify-center  overflow-hidden">
         <div className="mt-3 w-[500px] h-[500px] border-[#c1c1c1] rounded-lg border-[1px]	 ">
@@ -47,7 +47,7 @@ export function SignUp() {
         </div>
       </form>
           <p className="my-4 text-sm text-center">
-            Have an Account? <a href="#"className="font-medium	">LOGIN</a>
+            Have an Account? <a href="#"className="font-medium" onClick={()=>{setIsSignedUp(false)}}>LOGIN</a>
           </p>
         </div>
       </div>

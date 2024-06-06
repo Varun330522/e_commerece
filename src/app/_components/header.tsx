@@ -3,7 +3,7 @@ import Image from 'next/image';
 export function Header() {
     return (
         <div className='w-full overflow-hidden mb-5'>
-        <header className="container m-2 flex items-center justify-between px-2">
+        <header className="m-2 flex items-center justify-between px-2">
             <div className="font-bold text-xl flex-1 cursor-pointer">ECOMMERCE</div>
             <div className='grow'>
                 <nav className="flex items-center justify-end space-x-4 text-sm mr-6">

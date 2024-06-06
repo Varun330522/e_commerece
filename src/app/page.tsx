@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Header } from "./_components/header";
 import { SignUp } from "./pages/sign_up";
 import { Login } from "./pages/login";
+import { Verification } from './pages/verification';
 
 export default  function Home() {
   const [isSignedUp, setIsSignedUp] = useState(false); // Replace this with your actual condition
@@ -10,7 +11,8 @@ export default  function Home() {
   return (
     <main>
       <Header />
-      {isSignedUp ? <SignUp setIsSignedUp={setIsSignedUp}/> : <Login setIsSignedUp={setIsSignedUp}/>}
+      <Verification/>
+      {/* {isSignedUp ? <SignUp setIsSignedUp={setIsSignedUp}/> : <Login setIsSignedUp={setIsSignedUp}/>} */}
     </main>
   );
 }

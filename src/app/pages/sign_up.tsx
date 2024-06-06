@@ -1,3 +1,4 @@
+import { api } from "~/trpc/react";
 export function SignUp({setIsSignedUp}) {
     return (
       <div className=" flex items-center justify-center  overflow-hidden">

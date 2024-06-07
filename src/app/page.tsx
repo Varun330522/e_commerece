@@ -7,11 +7,13 @@ import { Verification } from './pages/verification';
 
 export default  function Home() {
   const [isSignedUp, setIsSignedUp] = useState(false); // Replace this with your actual condition
-
+  const handleCodeSubmit = ()=>{
+    console.log('hello');
+  }
   return (
     <main>
       <Header />
-      <Verification/>
+      <Verification reset={undefined}/>
       {/* {isSignedUp ? <SignUp setIsSignedUp={setIsSignedUp}/> : <Login setIsSignedUp={setIsSignedUp}/>} */}
     </main>
   );

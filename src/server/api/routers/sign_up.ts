@@ -19,9 +19,9 @@ export const signUpRouter = createTRPCRouter({
     create: publicProcedure.
     input(signUpSchema).
     mutation(async ({ ctx, input }) => {
-        const {email} = input;
+        const {name,email,password} = input;
         const existingUser = await ctx.db.user.findUnique({
-            where: { email },
+            where: {name,email,password},
           });
         if (existingUser) {
             throw new Error('Email already exists');

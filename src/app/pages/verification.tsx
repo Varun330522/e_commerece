@@ -12,8 +12,8 @@ import Cookies from 'js-cookie';
 interface VerificationProps {
   reset: undefined;
   data: {
-    email: string;
     name: string;
+    email: string;
     password: string;
   };
   onVerified: () => void;
@@ -82,7 +82,7 @@ export function Verification({ reset, data, onVerified }: VerificationProps) {
 
   const maskEmail = (email: string) => {
     const [localPart, domain] = email.split('@');
-    if (localPart && localPart.length > 4) {
+    if (localPart && domain && localPart.length > 4) {
       return `${localPart.slice(0, 4)}***@${domain}`;
     }
     return email;

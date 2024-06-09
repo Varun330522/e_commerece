@@ -14,7 +14,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export default function Home() {
   const [currentComponent, setCurrentComponent] = useState('');
-  const [verificationData, setVerificationData] = useState<{ email: string, name: string, password: string } | null>(null);
+  const [verificationData, setVerificationData] = useState<{ name: string, email: string, password: string } | null>(null);
   const [token, setToken] = useState('');
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function Home() {
     }
   }, []);
 
-  const handleVerification = (email: string, name: string, password: string) => {
-    setVerificationData({email,name,password});
+  const handleVerification = (name: string,email: string, password: string) => {
+    setVerificationData({name,email,password});
     setCurrentComponent('VERIFICATION');
   };
 

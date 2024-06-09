@@ -1,20 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, type RefObject } from 'react';
 import { api } from '~/trpc/react';
 import Cookies from 'js-cookie';
 
-export function Verification({ reset, data, onVerified }) {
-  const [code, setCode] = useState('');
-  const inputRefs = Array.from({ length: 8 }, () => useRef(null));
+interface VerificationProps {
+  reset: undefined;
+  data: {
+    email: string;
+    name: string;
+    password: string;
+  };
+  onVerified: () => void;
+}
+
+export function Verification({ reset, data, onVerified }: VerificationProps) {
+  const [code, setCode] = useState<string>('');
+  const inputRefs: RefObject<HTMLInputElement>[] = Array.from({ length: 8 }, () => useRef<HTMLInputElement>(null));
 
   const resetCode = () => {
     inputRefs.forEach((ref) => {
       if (ref.current) ref.current.value = '';
     });
-    if (inputRefs[0].current) inputRefs[0].current.focus();
+    if (inputRefs[0]?.current) {
+      inputRefs[0].current.focus();
+    }
     setCode('');
   };
 
@@ -22,7 +37,7 @@ export function Verification({ reset, data, onVerified }) {
     resetCode();
   }, [reset]);
 
-  const handlePaste = (e) => {
+  const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pastedCode = e.clipboardData.getData('text');
     if (pastedCode.length === 8) {
       setCode(pastedCode);
@@ -32,59 +47,58 @@ export function Verification({ reset, data, onVerified }) {
     }
   };
 
-  const handleInput = (e, index) => {
-    const input = e.target;
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+    const input = e.target as HTMLInputElement;
     const previousInput = inputRefs[index - 1];
     const nextInput = inputRefs[index + 1];
 
-    const newCode = [...code];
+    const newCode = code.split('');
     const value = input.value;
     newCode[index] = value;
 
-    inputRefs[index].current.value = value;
     setCode(newCode.join(''));
 
-    if (input.value === '' && previousInput) {
+    if (input.value === '' && previousInput?.current) {
       previousInput.current.focus();
-    } else if (nextInput) {
+    } else if (nextInput?.current) {
       nextInput.current.select();
     }
   };
 
-  const handleFocus = (e) => {
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     e.target.select();
   };
 
-  const handleKeyDown = (e, index) => {
-    const input = e.target;
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    const input = e.target as HTMLInputElement;
     const previousInput = inputRefs[index - 1];
 
-    if ((e.keyCode === 8 || e.keyCode === 46) && input.value === '') {
+    if ((e.key === 'Backspace' || e.key === 'Delete') && input.value === '') {
       e.preventDefault();
       setCode((prevCode) => prevCode.slice(0, index) + prevCode.slice(index + 1));
-      if (previousInput) previousInput.current.focus();
+      if (previousInput?.current) previousInput.current.focus();
     }
   };
 
-  const maskEmail = (email) => {
+  const maskEmail = (email: string) => {
     const [localPart, domain] = email.split('@');
-    if (localPart.length > 4) {
+    if (localPart && localPart.length > 4) {
       return `${localPart.slice(0, 4)}***@${domain}`;
     }
     return email;
   };
 
   const verifyOtp = api.verify_otp.create.useMutation({
-    onSuccess: (data) => {
+    onSuccess: (data:{token: string}) => {
       Cookies.set('jwt_token', data.token, { expires: 1 });
       onVerified();
     },
-    onError: (error) => {
+    onError: (error: object) => {
       alert(error);
     },
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     verifyOtp.mutate({
       name: data.name,

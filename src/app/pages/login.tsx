@@ -3,7 +3,12 @@ import { useState } from 'react';
 import { api } from "~/trpc/react";
 import Cookies from 'js-cookie';
 
-export function Login({ onSignUp, onLogin }) {
+interface LoginProps {
+  onSignUp: () => void;
+  onLogin: () => void;
+}
+
+export function Login({ onSignUp, onLogin }: LoginProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -68,7 +73,7 @@ export function Login({ onSignUp, onLogin }) {
           </div>
         </form>
         <p className="my-4 text-sm text-center">
-          Don&apos;t have an Account? <a href="#" className="font-medium ml-2" onClick={() => onSignUp(true)}>SIGN UP</a>
+          Don&apos;t have an Account? <a href="#" className="font-medium ml-2" onClick={() => onSignUp()}>SIGN UP</a>
         </p>
       </div>
     </div>

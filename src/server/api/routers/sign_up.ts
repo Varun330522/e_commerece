@@ -19,7 +19,7 @@ export const signUpRouter = createTRPCRouter({
     create: publicProcedure.
     input(signUpSchema).
     mutation(async ({ ctx, input }) => {
-        const { name, email, password } = input;
+        const {email} = input;
         const existingUser = await ctx.db.user.findUnique({
             where: { email },
           });

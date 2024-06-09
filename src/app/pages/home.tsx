@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { api } from '~/trpc/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+
 
 const queryClient = new QueryClient();
 
@@ -52,6 +51,10 @@ export function HomePage() {
     return <div>Error fetching categories</div>;
   }
 
+  if (!data) {
+    return <div>No data available</div>;
+  }
+
   const { categories, totalCategories } = data;
   const totalPages = Math.ceil(totalCategories / itemsPerPage);
 
@@ -74,7 +77,7 @@ export function HomePage() {
   const renderPageNumbers = () => {
     const pageNumbers = [];
     let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbersToShow / 2));
-    let endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
+    const endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
 
     if (endPage - startPage + 1 < maxPageNumbersToShow) {
       startPage = Math.max(1, endPage - maxPageNumbersToShow + 1);
@@ -121,7 +124,7 @@ export function HomePage() {
           <h3 className="mt-6 text-xl font-medium text-center">We will keep you notified.</h3>
           <p className="text mt-6 font-semibold">My saved interests!</p>
           <ul>
-            {categories?.map((category) => (
+            {categories.map((category) => (
               <li key={category.id} className="flex items-center mb-2">
                 <input
                   type="checkbox"

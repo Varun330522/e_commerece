@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
@@ -21,7 +22,7 @@ export const signUpRouter = createTRPCRouter({
     mutation(async ({ ctx, input }) => {
         const {name,email,password} = input;
         const existingUser = await ctx.db.user.findUnique({
-            where: {name,email,password},
+            where: {email},
           });
         if (existingUser) {
             throw new Error('Email already exists');
